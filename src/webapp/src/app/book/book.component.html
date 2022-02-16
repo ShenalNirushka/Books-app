@@ -1,0 +1,141 @@
+<app-navbar></app-navbar>
+
+<div class=".container-fluid m-5">
+  <button class="btn btn-md btn-success mb-2" (click)="open(content)">
+    Add Book
+  </button>
+  <table class="table table-bordered">
+    <thead class="table">
+      <tr id="header">
+        <th>Name</th>
+        <th>ISBN</th>
+        <th>Genre</th>
+        <th>Description</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+        <td>{{ book.name }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.genre }}</td>
+        <td>{{ book.description }}</td>
+        <td class="col-md-1">
+          <button
+            class="btn btn-sm btn-danger"
+            style="margin-right: 0.8em"
+            (click)="deleteBook(book)"
+          >
+            Delete
+          </button>
+        </td>
+        <td class="col-md-1">
+          <button
+            class="btn btn-sm btn-primary"
+            style="margin-right: 0.8em"
+            (click)="open(content, book)"
+          >
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add New Book</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="bookForm" ngNativeValidate (ngSubmit)="onSubmit()">
+        <div class="mb-3" *ngIf="">
+          <label for="name">Id</label>
+          <input
+            type="text"
+            id="id"
+            class="form-control"
+            formControlName="id"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            formControlName="name"
+            placeholder="Enter Name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="isbn">ISBN</label>
+          <input
+            type="text"
+            id="isbn"
+            class="form-control"
+            formControlName="isbn"
+            placeholder="Enter ISBN"
+            maxlength="13"
+            minlength="13"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="name">Genre</label>
+          <input
+            type="text"
+            id="description"
+            class="form-control"
+            formControlName="genre"
+            placeholder="Enter Genre"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="name">Description</label>
+          <input
+            type="text"
+            id="description"
+            class="form-control"
+            formControlName="description"
+            placeholder="Enter Description"
+            required
+          />
+        </div>
+        <button
+          *ngIf="!edit"
+          type="submit"
+          class="btn btn-sm btn-outline-primary"
+          style="margin-right: 0.8em"
+        >
+          Submit
+        </button>
+        <button
+          *ngIf="edit"
+          type="submit"
+          class="btn btn-sm btn-outline-primary"
+          style="margin-right: 0.8em"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary"
+          (click)="clear()"
+        >
+          Clear
+        </button>
+      </form>
+    </div>
+    <div class="modal-footer"></div>
+  </ng-template>
+</div>
